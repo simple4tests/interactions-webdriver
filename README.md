@@ -47,5 +47,5 @@ Inside the box:
 https://simple4tests.github.io/interactions-webdriver/
 
 ### Examples of implementation
-#### iwd-ex-junit
-#### iwd-ex-cucumber
+#### wdi-ex-junit
+#### wdi-ex-cucumber
