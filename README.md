@@ -17,37 +17,37 @@ Inside the box:
 ## Quick guide
 1. Add dependency on your pom.xml file
 
-
+```markdown
     <dependency>
         <groupId>io.github.simple4tests</groupId>
         <artifactId>interactions-webdriver</artifactId>
         <version>...</version>
     </dependency>
-
+```
 
 3. Instanciate a WebDriverInteractions object
 
-
+```markdown
     WebDriver driver;
     ...
     driver = new ChromeDriver();
     ...
     WebDriverInteractions ui = new WebDriverInteractions(driver);
-
+```
 
 4. Just use it
 
-
+```markdown
     ui.browser.navigateTo(...);
     ui.click(...);
     ui.set(...);
     ...
-
+```
 
 ## More info
 
 ### Documentation
-https://simple4tests.github.io/interactions-webdriver/
+For more details see [wdi](https://simple4tests.github.io/interactions-webdriver/) pages
 
 ### Examples of implementation
 #### wdi-ex-junit
