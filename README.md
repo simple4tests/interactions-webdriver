@@ -24,6 +24,7 @@ Inside the box:
         <version>...</version>
     </dependency>
 
+
 3. Instanciate a WebDriverInteractions object
 
 
@@ -33,6 +34,7 @@ Inside the box:
     ...
     WebDriverInteractions ui = new WebDriverInteractions(driver);
 
+
 4. Just use it
 
 
@@ -40,6 +42,7 @@ Inside the box:
     ui.click(...);
     ui.set(...);
     ...
+
 
 ## More info
 
