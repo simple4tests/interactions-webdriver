@@ -1,36 +1,20 @@
-## Welcome to GitHub Pages
+## Welcome to WebDriverInteractions Pages
 
-You can use the [editor on GitHub](https://github.com/simple4tests/interactions-webdriver/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+WebDriverInteractions (wdi) is a set of functions you can integrate in your selenium test automation framework to manage automaticaly several technical stuff like waits, scrolling and much more.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+You have less to care about it, keeping the code clean and focused on the test purpose.
 
-### Markdown
+### Benefits in practice
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+| Case | Sélénium | WebDriverInteractions |
+| ---- | -------- | --- |
+| Element not present | ![This is an image](ex1_se.png) | ![This is an image](ex1_wdi.png) |
 
-```markdown
-Syntax highlighted code block
+The example above is a real and common case where elements are displayed after the page loads.
+In this situation we have to inform explicitely the web driver to wait for the elements before interacting with them.
+Wdi will automatically perform basic check before interacting with the elements and in a lot of cases he doen'st need more information.
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/simple4tests/interactions-webdriver/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Additional examples are available in [wdi-ex-junit](https://github.com/simple4tests/wdi-ex-junit)
 
 ### Support or Contact
 
