@@ -3,21 +3,13 @@ The goal of simple4tests is to provide methodology and simple tools to support d
 
 ## Package interactions-webdriver
 
-Interactions-webdriver is a set of functions you can integrate in your selenium test automation framework.
-Interactions-webdriver manages automaticaly several technical stuff like waits, scrolling and much more.
+WebDriverInteractions (wdi) is a set of functions you can integrate in your selenium test automation framework to manage automaticaly several technical stuff like waits, scrolling and much more.
 
-You have less to care about it, keeping the code clean and focused on the test purpose. 
-
-Inside the box:
-- WebDriverInteractions.* : DOM interactions
-- WebDriverInteractions.browser.* : Browser interactions like url navigation, switching and closing tabs, scrolling, ...
-- WebDriverInteractions.javaScript.* : Execute javascript
-- WebDriverInteractions.wait.* : Wait until a condition comes true, or not, and continue
+You have less to care about it, keeping the code clean and focused on the test purpose.
 
 ## Quick guide
 1. Add dependency on your pom.xml file
-
-```markdown
+```
     <dependency>
         <groupId>io.github.simple4tests</groupId>
         <artifactId>interactions-webdriver</artifactId>
@@ -25,19 +17,17 @@ Inside the box:
     </dependency>
 ```
 
-3. Instanciate a WebDriverInteractions object
-
-```markdown
+2. Instanciate a WebDriverInteractions object
+```
     WebDriver driver;
     ...
     driver = new ChromeDriver();
     ...
     WebDriverInteractions ui = new WebDriverInteractions(driver);
 ```
-
-4. Just use it
-
-```markdown
+ 
+3. Just use it
+```
     ui.browser.navigateTo(...);
     ui.click(...);
     ui.set(...);
@@ -47,8 +37,34 @@ Inside the box:
 ## More info
 
 ### Documentation
-For more details see [wdi](https://simple4tests.github.io/interactions-webdriver/) pages
+For more details see [WebDriverInteractions](https://simple4tests.github.io/interactions-webdriver/) page
 
 ### Examples of implementation
-#### wdi-ex-junit
-#### wdi-ex-cucumber
+For junit examples, checkout [wdi-ex-junit](https://github.com/simple4tests/wdi-ex-junit) on gitHub
+
+For cucumber examples, checkout [wdi-ex-cucumber](https://github.com/simple4tests/wdi-ex-cucumber) on GitHub
+
+## License
+```
+MIT License
+
+Copyright (c) 2022 simple4tests
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```

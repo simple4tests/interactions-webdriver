@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>Interactions-webdriver is a set of functions you can integrate in your selenium test automation framework to keep your code clean and focused on the test purpose</description>
+    <description>WebDriverInteractions will keep your selenium code clean and focused on the test purpose</description>
     <url>https://simple4tests.github.io/interactions-webdriver/</url>
 
     <licenses>
