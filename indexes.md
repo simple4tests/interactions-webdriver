@@ -1,5 +1,8 @@
 ---
+se: "this is a sel test"
+wdi: "this is a wdi test"
 ---
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +18,7 @@
 </header>
 <main id="content" class="main-content" role="main">
     <h3 id="benefits-in-practice">Benefits in practice</h3>
-    <table>
+<table>
         <thead>
         <tr>
             <th>Case</th>
@@ -31,18 +34,8 @@
         </tr>
         <tr>
             <td>Element not present</td>
-            <td>
-                ```java
-                @Test
-                public void seTest() {}
-                ```
-            </td>
-            <td>
-                ```java
-                @Test
-                public void wdiTest() {}
-                ```
-            </td>
+            <td>{{ se }}</td>
+            <td>{{ wdi }}</td>
         </tr>
         </tbody>
     </table>
