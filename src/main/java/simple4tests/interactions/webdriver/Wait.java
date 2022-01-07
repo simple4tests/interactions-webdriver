@@ -48,7 +48,7 @@ public class Wait {
             NoSuchFrameException.class,
             NoAlertPresentException.class);
 
-    public Wait(final WebDriver driver) {
+    public Wait(WebDriver driver) {
         this.driver = driver;
         this.interval = DEFAULT_INTERVAL;
         this.timeout = DEFAULT_TIMEOUT;
@@ -56,17 +56,17 @@ public class Wait {
         this.doNotCatchTimeoutException = true;
     }
 
-    public Wait pollingEvery(final Duration interval) {
+    public Wait pollingEvery(Duration interval) {
         this.interval = interval;
         return this;
     }
 
-    public Wait withTimeout(final Duration timeout) {
+    public Wait withTimeout(Duration timeout) {
         this.timeout = timeout;
         return this;
     }
 
-    public Wait ignoreAll(final Collection<Class<? extends Throwable>> exceptions) {
+    public Wait ignoreAll(Collection<Class<? extends Throwable>> exceptions) {
         this.exceptions = exceptions;
         return this;
     }
@@ -76,23 +76,11 @@ public class Wait {
         return this;
     }
 
-    public Boolean elementToBePresent(final By by) {
+    public Boolean elementToBePresent(By by) {
         return expectedCondition(input -> 0 < driver.findElements(by).size());
     }
 
-    public Boolean elementToBeAbsent(final By by) {
-        return expectedCondition(input -> 0 == driver.findElements(by).size());
-    }
-
-    public Boolean elementToBeDisplayed(final WebElement element) {
-        return expectedCondition(input -> element.isDisplayed());
-    }
-
-    public Boolean elementToBeEnabled(final WebElement element) {
-        return expectedCondition(input -> element.isEnabled());
-    }
-
-    public <T> T expectedCondition(final Function<WebDriver, T> expectedCondition) {
+    public <T> T expectedCondition(Function<WebDriver, T> expectedCondition) {
         if (doNotCatchTimeoutException) {
             return waitUntil(expectedCondition, driver, interval, timeout, exceptions);
         }

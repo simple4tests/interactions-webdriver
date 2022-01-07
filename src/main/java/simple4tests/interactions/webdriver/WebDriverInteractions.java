@@ -28,17 +28,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 public class WebDriverInteractions {
-
-    private static final String DEFAULT_SCROLL_BEHAVIOR = "auto";
-    private static final String DEFAULT_SCROLL_BLOCK = "center";
-    private static final String DEFAULT_SCROLL_INLINE = "center";
-
-    private String behavior;
-    private String block;
-    private String inline;
 
     protected WebDriver driver;
 
@@ -48,27 +41,10 @@ public class WebDriverInteractions {
 
     public WebDriverInteractions(WebDriver driver) {
         this.driver = driver;
-        this.behavior = DEFAULT_SCROLL_BEHAVIOR;
-        this.block = DEFAULT_SCROLL_BLOCK;
-        this.inline = DEFAULT_SCROLL_INLINE;
 
         wait = new Wait(driver);
         javaScript = new JavaScript(driver);
         browser = new Browser(driver, wait, javaScript);
-    }
-
-    public void setScrollOptions(String behavior, String block, String inline) {
-        this.behavior = behavior;
-        this.block = block;
-        this.inline = inline;
-    }
-
-    protected boolean isNull(By by) {
-        return null == by;
-    }
-
-    protected boolean isNull(Boolean value) {
-        return null == value;
     }
 
     protected boolean isNull(CharSequence... value) {
@@ -83,28 +59,44 @@ public class WebDriverInteractions {
         return false;
     }
 
-    protected WebElement getElementWhenPresent(By by) {
+    protected boolean isNull(Boolean value) {
+        return null == value;
+    }
+
+    protected boolean isNull(By by) {
+        return null == by;
+    }
+
+    public WebElement getElementWhenReady(By by) {
+        WebElement element = getElementWhenPresent(by);
+        wait.expectedCondition(input -> element.isDisplayed());
+        wait.expectedCondition(input -> element.isEnabled());
+        browser.scrollIntoView(element);
+        return element;
+    }
+
+    public WebElement getElementWhenPresent(By by) {
         wait.elementToBePresent(by);
+        return getElement(by);
+    }
+
+    public WebElement getElement(By by) {
         return driver.findElement(by);
     }
 
-    protected WebElement getElementWhenDisplayed(By by) {
-        WebElement element = getElementWhenPresent(by);
-        browser.scrollIntoView(element, behavior, block, inline);
-        return element;
+    public boolean isElementPresent(By by) {
+        return 0 < countElements(by);
     }
 
-    protected WebElement getElementWhenEnabled(By by) {
-        WebElement element = getElementWhenDisplayed(by);
-        wait.elementToBeEnabled(element);
-        return element;
+    public int countElements(By by) {
+        return isNull(by) ? 0 : driver.findElements(by).size();
     }
 
     public void clear(By by) {
         if (isNull(by)) {
             return;
         }
-        WebElement element = getElementWhenEnabled(by);
+        WebElement element = getElementWhenReady(by);
         element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
         element.clear();
     }
@@ -117,14 +109,14 @@ public class WebDriverInteractions {
             clear(by);
             return;
         }
-        getElementWhenEnabled(by).sendKeys(value);
+        getElementWhenReady(by).sendKeys(value);
     }
 
     public void select(By by, Boolean value) {
         if (isNull(by) || isNull(value)) {
             return;
         }
-        WebElement element = getElementWhenEnabled(by);
+        WebElement element = getElementWhenReady(by);
         if (!value.equals(element.isSelected())) {
             element.click();
         }
@@ -134,14 +126,16 @@ public class WebDriverInteractions {
         if (isNull(by) || isNull(text)) {
             return;
         }
-        new Select(getElementWhenEnabled(by)).selectByVisibleText(text);
+        WebElement element = getElementWhenReady(by);
+        wait.expectedCondition(ExpectedConditions.textToBePresentInElement(element, text));
+        new Select(element).selectByVisibleText(text);
     }
 
     public void click(By by) {
         if (isNull(by)) {
             return;
         }
-        getElementWhenEnabled(by).click();
+        getElementWhenReady(by).click();
     }
 
     public void doubleClick(By by) {
@@ -150,7 +144,7 @@ public class WebDriverInteractions {
         }
         javaScript.execute(
                 "var evObj = new MouseEvent('dblclick', {bubbles: true, cancelable: true, view: window});arguments[0].dispatchEvent(evObj);",
-                getElementWhenEnabled(by)
+                getElementWhenReady(by)
         );
     }
 
@@ -158,27 +152,20 @@ public class WebDriverInteractions {
         if (isNull(by) || isNull(fileAbsolutePath) || fileAbsolutePath.isEmpty()) {
             return;
         }
-        getElementWhenEnabled(by).sendKeys(fileAbsolutePath);
+        getElementWhenReady(by).sendKeys(fileAbsolutePath);
     }
 
     public String getText(By by) {
         if (isNull(by)) {
             return "";
         }
-        return getElementWhenDisplayed(by).getText();
+        return getElementWhenPresent(by).getText();
     }
 
     public String getAttribute(By by, String attribute) {
         if (isNull(by) || isNull(attribute)) {
             return "";
         }
-        return getElementWhenDisplayed(by).getAttribute(attribute);
-    }
-
-    public int countElements(By by) {
-        if (isNull(by)) {
-            return 0;
-        }
-        return driver.findElements(by).size();
+        return getElementWhenPresent(by).getAttribute(attribute);
     }
 }
