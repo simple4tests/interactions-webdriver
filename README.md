@@ -7,7 +7,7 @@ WebDriverInteractions (wdi) is a set of functions you can integrate in your sele
 
 You have less to care about it, keeping the code clean and focused on the test purpose.
 
-## Quick guide
+## Usage
 1. Add dependency on your pom.xml file
 ```
     <dependency>
