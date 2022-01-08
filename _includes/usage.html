@@ -3,29 +3,29 @@
 
 1. Add dependency on your pom.xml file
 
-    ```
+    ~~~java
     <dependency>
         <groupId>io.github.simple4tests</groupId>
         <artifactId>interactions-webdriver</artifactId>
         <version>...</version>
     </dependency>
-    ```
+    ~~~
 
 2. Instanciate a WebDriverInteractions object
 
-    ```
+    ~~~java
     WebDriver driver;
     ...
     driver = new ChromeDriver();
     ...
     WebDriverInteractions ui = new WebDriverInteractions(driver);
-    ```
+    ~~~
 
 3. Just use it
 
-    ```
+    ~~~java
     ui.browser.navigateTo(...);
     ui.click(...);
     ui.set(...);
     ...
-    ```
+    ~~~
