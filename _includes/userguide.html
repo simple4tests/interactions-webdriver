@@ -350,7 +350,7 @@ We include in the documentation the main selenium function embeded in the WebDri
     </tr>
     <tr>
         <td>
-            public &lt;T&gt; T expectedCondition(<br>
+            public &lt;T&gt; T until(<br>
             &nbsp;&nbsp;&nbsp;&nbsp;Function&lt;WebDriver, T&gt; expectedCondition)
         </td>
         <td>
@@ -358,10 +358,10 @@ We include in the documentation the main selenium function embeded in the WebDri
             ex :
             <ul>
                 <li>
-                    wait.expectedCondition(<br>
+                    wait.until(<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;ExpectedConditions.textToBePresentInElement(element, text))
                 </li>
-                <li>wait.expectedCondition(input -> 0 < driver.findElements(by).size())</li>
+                <li>wait.until(input -> 0 < driver.findElements(by).size())</li>
             </ul>
         </td>
     </tr>
