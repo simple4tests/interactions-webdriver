@@ -72,7 +72,7 @@ public class Browser {
     }
 
     public Alert getAlert() {
-        return wait.expectedCondition(ExpectedConditions.alertIsPresent());
+        return wait.until(ExpectedConditions.alertIsPresent());
     }
 
     public void scrollIntoView(WebElement webElement) {
@@ -107,15 +107,15 @@ public class Browser {
     }
 
     public void switchToFrame(By by) {
-        wait.expectedCondition(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
     }
 
     public void switchToFrame(int index) {
-        wait.expectedCondition(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
     }
 
     public void switchToFrame(String nameOrId) {
-        wait.expectedCondition(ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId));
     }
 
     public void quit() {

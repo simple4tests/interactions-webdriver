@@ -69,8 +69,8 @@ public class WebDriverInteractions {
 
     public WebElement getElementWhenReady(By by) {
         WebElement element = getElementWhenPresent(by);
-        wait.expectedCondition(input -> element.isDisplayed());
-        wait.expectedCondition(input -> element.isEnabled());
+        wait.until(input -> element.isDisplayed());
+        wait.until(input -> element.isEnabled());
         browser.scrollIntoView(element);
         return element;
     }
@@ -127,7 +127,7 @@ public class WebDriverInteractions {
             return;
         }
         WebElement element = getElementWhenReady(by);
-        wait.expectedCondition(ExpectedConditions.textToBePresentInElement(element, text));
+        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
         new Select(element).selectByVisibleText(text);
     }
 

@@ -12,6 +12,10 @@ public class JavaScript {
     }
 
     public void execute(String script, Object... args) {
+        execute(driver, script, args);
+    }
+
+    public static void execute(WebDriver driver, String script, Object... args) {
         ((JavascriptExecutor) driver).executeScript(script, args);
     }
 }

@@ -77,22 +77,22 @@ public class Wait {
     }
 
     public Boolean elementToBePresent(By by) {
-        return expectedCondition(input -> 0 < driver.findElements(by).size());
+        return until(input -> 0 < driver.findElements(by).size());
     }
 
-    public <T> T expectedCondition(Function<WebDriver, T> expectedCondition) {
+    public <T> T until(Function<WebDriver, T> expectedCondition) {
         if (doNotCatchTimeoutException) {
-            return waitUntil(expectedCondition, driver, interval, timeout, exceptions);
+            return until(expectedCondition, driver, interval, timeout, exceptions);
         }
         doNotCatchTimeoutException = true;
         try {
-            return waitUntil(expectedCondition, driver, interval, timeout, exceptions);
+            return until(expectedCondition, driver, interval, timeout, exceptions);
         } catch (TimeoutException e) {
             return expectedCondition.apply(driver);
         }
     }
 
-    public static <T> T waitUntil(
+    public static <T> T until(
             final Function<WebDriver, T> expectedCondition,
             final WebDriver driver,
             final Duration interval,
