@@ -34,6 +34,8 @@ import org.openqa.selenium.support.ui.Select;
 public class WebDriverInteractions {
 
     protected WebDriver driver;
+    protected boolean clear;
+    protected boolean alwaysClear;
 
     public Wait wait;
     public JavaScript javaScript;
@@ -41,6 +43,8 @@ public class WebDriverInteractions {
 
     public WebDriverInteractions(WebDriver driver) {
         this.driver = driver;
+        this.clear = false;
+        this.alwaysClear = false;
 
         wait = new Wait(driver);
         javaScript = new JavaScript(driver);
@@ -67,21 +71,26 @@ public class WebDriverInteractions {
         return null == by;
     }
 
-    public WebElement getElementWhenReady(By by) {
-        WebElement element = getElementWhenPresent(by);
+    public WebDriverInteractions clear() {
+        clear = true;
+        return this;
+    }
+
+    public void setClearOption(boolean alwaysClear) {
+        this.alwaysClear = alwaysClear;
+    }
+
+    public WebElement getElement(By by) {
+        wait.elementToBePresent(by);
+        return driver.findElement(by);
+    }
+
+    public WebElement getInteractableElement(By by) {
+        WebElement element = getElement(by);
         wait.until(input -> element.isDisplayed());
         wait.until(input -> element.isEnabled());
         browser.scrollIntoView(element);
         return element;
-    }
-
-    public WebElement getElementWhenPresent(By by) {
-        wait.elementToBePresent(by);
-        return getElement(by);
-    }
-
-    public WebElement getElement(By by) {
-        return driver.findElement(by);
     }
 
     public boolean isElementPresent(By by) {
@@ -96,12 +105,16 @@ public class WebDriverInteractions {
         if (isNull(by)) {
             return;
         }
-        WebElement element = getElementWhenReady(by);
+        WebElement element = getInteractableElement(by);
         element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
         element.clear();
     }
 
     public void set(By by, CharSequence... value) {
+        if (clear || alwaysClear) {
+            clear = false;
+            clear(by);
+        }
         if (isNull(by) || isNull(value)) {
             return;
         }
@@ -109,14 +122,14 @@ public class WebDriverInteractions {
             clear(by);
             return;
         }
-        getElementWhenReady(by).sendKeys(value);
+        getInteractableElement(by).sendKeys(value);
     }
 
     public void select(By by, Boolean value) {
         if (isNull(by) || isNull(value)) {
             return;
         }
-        WebElement element = getElementWhenReady(by);
+        WebElement element = getInteractableElement(by);
         if (!value.equals(element.isSelected())) {
             element.click();
         }
@@ -126,7 +139,7 @@ public class WebDriverInteractions {
         if (isNull(by) || isNull(text)) {
             return;
         }
-        WebElement element = getElementWhenReady(by);
+        WebElement element = getInteractableElement(by);
         wait.until(ExpectedConditions.textToBePresentInElement(element, text));
         new Select(element).selectByVisibleText(text);
     }
@@ -135,7 +148,7 @@ public class WebDriverInteractions {
         if (isNull(by)) {
             return;
         }
-        getElementWhenReady(by).click();
+        getInteractableElement(by).click();
     }
 
     public void doubleClick(By by) {
@@ -144,7 +157,7 @@ public class WebDriverInteractions {
         }
         javaScript.execute(
                 "var evObj = new MouseEvent('dblclick', {bubbles: true, cancelable: true, view: window});arguments[0].dispatchEvent(evObj);",
-                getElementWhenReady(by)
+                getInteractableElement(by)
         );
     }
 
@@ -152,20 +165,20 @@ public class WebDriverInteractions {
         if (isNull(by) || isNull(fileAbsolutePath) || fileAbsolutePath.isEmpty()) {
             return;
         }
-        getElementWhenReady(by).sendKeys(fileAbsolutePath);
+        getInteractableElement(by).sendKeys(fileAbsolutePath);
     }
 
     public String getText(By by) {
         if (isNull(by)) {
             return "";
         }
-        return getElementWhenPresent(by).getText();
+        return getElement(by).getText();
     }
 
     public String getAttribute(By by, String attribute) {
         if (isNull(by) || isNull(attribute)) {
             return "";
         }
-        return getElementWhenPresent(by).getAttribute(attribute);
+        return getElement(by).getAttribute(attribute);
     }
 }
