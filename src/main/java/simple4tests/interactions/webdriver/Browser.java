@@ -91,6 +91,7 @@ public class Browser {
     }
 
     public void switchToTab(int index) {
+        wait.until(input -> index < driver.getWindowHandles().size());
         driver.switchTo().window(driver.getWindowHandles().toArray()[index].toString());
     }
 
