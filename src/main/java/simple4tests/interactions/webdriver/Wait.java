@@ -92,6 +92,14 @@ public class Wait {
         return until(expectedCondition, driver, interval, timeout, exceptions);
     }
 
+    public static <T> T until(final Function<WebDriver, T> expectedCondition, final WebDriver driver) {
+        return new FluentWait<>(driver)
+                .pollingEvery(DEFAULT_INTERVAL)
+                .withTimeout(DEFAULT_TIMEOUT)
+                .ignoreAll(DEFAULT_EXCEPTIONS)
+                .until(expectedCondition);
+    }
+
     public static <T> T until(
             final Function<WebDriver, T> expectedCondition,
             final WebDriver driver,

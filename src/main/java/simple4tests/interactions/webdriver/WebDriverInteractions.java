@@ -181,4 +181,24 @@ public class WebDriverInteractions {
         }
         return getElement(by).getAttribute(attribute);
     }
+
+    public void switchToMainFrame() {
+        driver.switchTo().defaultContent();
+    }
+
+    public void switchToParentFrame() {
+        driver.switchTo().parentFrame();
+    }
+
+    public void switchToFrame(By by) {
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+    }
+
+    public void switchToFrame(int index) {
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
+    }
+
+    public void switchToFrame(String nameOrId) {
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId));
+    }
 }
