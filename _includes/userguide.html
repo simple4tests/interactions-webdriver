@@ -53,6 +53,58 @@ We include in the documentation the main selenium function embeded in the WebDri
     </tr>
     <tr>
         <td>
+            WebElement getElement(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;By by)
+        </td>
+        <td>Return the element matching the locator once the element is present</td>
+    </tr>
+    <tr>
+        <td>
+            WebElement getInteractableElement(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;By by)
+        </td>
+        <td>Return the element matching the locator once the element is ready for interactions</td>
+    </tr>
+    <tr>
+        <td>
+            boolean isElementPresent(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;By by)
+        </td>
+        <td>Return true is there are more than 0 elements in the page matching the locator</td>
+    </tr>
+    <tr>
+        <td>int countElements(By by)</td>
+        <td>Return the number of elements in the page matching the locator</td>
+    </tr>
+    <tr>
+        <td>clear(By by)</td>
+        <td>Clear input and textarea element matching the locator</td>
+    </tr>
+    <tr>
+        <td>WebDriverInteractions clear()</td>
+        <td>
+            <p>By default input and textarea elements are not cleared before setting a value.
+                Some times we need to clear the element to avoid the values to be concatenated.</p>
+            <p>This function configure the set function to clear the element before setting the new value.</p>
+            <ul>
+                <li>Set the value : set(by, value)</li>
+                <li>Clear and set the value : clear().set(by, value)</li>
+            </ul>
+            <b><i>The call of this function affects only the first following set action</i></b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            setClearOption(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;boolean alwaysClear)
+        </td>
+        <td>
+            If set to true, the set() function will always clear the element before setting the new value.<br>
+            <b>Default is false</b> (do not clear before setting the value).
+        </td>
+    </tr>
+    <tr>
+        <td>
             set(<br>
             &nbsp;&nbsp;&nbsp;&nbsp;By by,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;CharSequence... value)
@@ -60,6 +112,13 @@ We include in the documentation the main selenium function embeded in the WebDri
         <td>
             Set the value of the (input) element<br>
             Selenium : WebElement.sendkeys()
+        </td>
+    </tr>
+    <tr>
+        <td>select(By by, Boolean value)</td>
+        <td>
+            Set the property 'selected' of an (checkbox, radio btn) element <br>
+            Selenium : WebElement.click()
         </td>
     </tr>
     <tr>
@@ -71,13 +130,6 @@ We include in the documentation the main selenium function embeded in the WebDri
         <td>
             Select a value in a dropdown list<br>
             Selenium : Select().selectByVisibleText()
-        </td>
-    </tr>
-    <tr>
-        <td>select(By by, Boolean value)</td>
-        <td>
-            Set the property 'selected' of an (checkbox, radio btn) element <br>
-            Selenium : WebElement.click()
         </td>
     </tr>
     <tr>
@@ -117,128 +169,6 @@ We include in the documentation the main selenium function embeded in the WebDri
         </td>
     </tr>
     <tr>
-        <td>
-            String getAttribute(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;By by,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;String attribute)
-        </td>
-        <td>
-            Return the attribute's value of an element<br>
-            Selenium : WebElement.getAttribute()
-        </td>
-    </tr>
-    <tr>
-        <td>int countElements(By by)</td>
-        <td>Return the number of elements in the page matching the locator</td>
-    </tr>
-    <tr>
-        <td>
-            boolean isElementPresent(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;By by)
-        </td>
-        <td>Return true is there are more than 0 elements in the page matching the locator</td>
-    </tr>
-</table>
-
-<h3>Browser functions</h3>
-<table>
-    <tr>
-        <th style="width: 30%;">Name</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>
-            Browser(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;WebDriver driver,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;Wait wait,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;JavaScript javaScript)
-        </td>
-        <td>Public constructor</td>
-    </tr>
-    <tr>
-        <td>
-            setScrollIntoViewOptions(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;String behavior,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;String block,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;String inline)
-        </td>
-        <td>
-            Set scrollIntoView javascript command parameters<br>
-            Default values :<br>
-            <ul>
-                <li>public static final String DEFAULT_SCROLL_BEHAVIOR = "auto";</li>
-                <li>public static final String DEFAULT_SCROLL_BLOCK = "center";</li>
-                <li>public static final String DEFAULT_SCROLL_INLINE = "center";</li>
-            </ul>
-        </td>
-    </tr>
-    <tr>
-        <td>get(String url)</td>
-        <td>
-            Open the browser with the given url<br>
-            Selenium : driver.get()
-        </td>
-    </tr>
-    <tr>
-        <td>navigateTo(String url)</td>
-        <td>
-            Navigate to the given url<br>
-            Selenium : driver.navigate().to()
-        </td>
-    </tr>
-    <tr>
-        <td>getCurrentUrl()</td>
-        <td>
-            Get the current url<br>
-            Selenium : driver.getCurrentUrl()
-        </td>
-    </tr>
-    <tr>
-        <td>Alert getAlert()</td>
-        <td>Get the alert element</td>
-    </tr>
-    <tr>
-        <td>
-            scrollIntoView(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;WebElement webElement)
-        </td>
-        <td>
-            Scroll the page to display the element as specified by the options of the scrollIntoView<br>
-            By default, the element is displayed in the middle of the page
-        </td>
-    </tr>
-    <tr>
-        <td>
-            scrollIntoView(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;WebElement webElement,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;String behavior,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;String block,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;String inline)
-        </td>
-        <td>Call the scrollIntoView function with other settings without changing current behaviour</td>
-    </tr>
-    <tr>
-        <td>switchToFirstTab()</td>
-        <td>
-            Show tab with the index 0<br>
-            Selenium : driver.switchTo().window()
-        </td>
-    </tr>
-    <tr>
-        <td>switchToFirstTab(int index)</td>
-        <td>
-            Show tab with the given index<br>
-            Selenium : driver.switchTo().window()
-        </td>
-    </tr>
-    <tr>
-        <td>closeTab()</td>
-        <td>
-            Close current tab<br>
-            Selenium : driver.close()
-        </td>
-    </tr>
-    <tr>
         <td>switchToMainFrame()</td>
         <td>
             Switch to the main frame of the current page<br>
@@ -266,6 +196,106 @@ We include in the documentation the main selenium function embeded in the WebDri
             &nbsp;&nbsp;&nbsp;&nbsp;String nameOrId)
         </td>
         <td>Switch to the frame identified by its name or ID</td>
+    </tr>
+</table>
+
+<h3>Browser functions</h3>
+<table>
+    <tr>
+        <th style="width: 30%;">Name</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>
+            Browser(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;WebDriver driver,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Wait wait,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;JavaScript javaScript)
+        </td>
+        <td>Public constructor</td>
+    </tr>
+    <tr>
+        <td>get(String url)</td>
+        <td>
+            Open the browser with the given url<br>
+            Selenium : driver.get()
+        </td>
+    </tr>
+    <tr>
+        <td>navigateTo(String url)</td>
+        <td>
+            Navigate to the given url<br>
+            Selenium : driver.navigate().to()
+        </td>
+    </tr>
+    <tr>
+        <td>String getCurrentUrl()</td>
+        <td>
+            Get the current url<br>
+            Selenium : driver.getCurrentUrl()
+        </td>
+    </tr>
+    <tr>
+        <td>Alert getAlert()</td>
+        <td>Get the alert element</td>
+    </tr>
+    <tr>
+        <td>
+            setScrollIntoViewOptions(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String behavior,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String block,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String inline)
+        </td>
+        <td>
+            Set scrollIntoView javascript command parameters<br>
+            Default values :<br>
+            <ul>
+                <li>public static final String DEFAULT_SCROLL_BEHAVIOR = "auto";</li>
+                <li>public static final String DEFAULT_SCROLL_BLOCK = "center";</li>
+                <li>public static final String DEFAULT_SCROLL_INLINE = "center";</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            scrollIntoView(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;WebElement webElement)
+        </td>
+        <td>
+            <p>Scroll the page to display the element as specified by the scrollIntoView's options.</p>
+            By default, the element is displayed in the middle of the page.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            scrollIntoView(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;WebElement webElement,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String behavior,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String block,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String inline)
+        </td>
+        <td>Call the scrollIntoView function with custom settings</td>
+    </tr>
+    <tr>
+        <td>switchToFirstTab()</td>
+        <td>
+            Show tab with the index 0<br>
+            Selenium : driver.switchTo().window()
+        </td>
+    </tr>
+    <tr>
+        <td>switchToTab(int index)</td>
+        <td>
+            Show tab with the given index<br>
+            Selenium : driver.switchTo().window()
+        </td>
+    </tr>
+    <tr>
+        <td>closeTab()</td>
+        <td>
+            Close current tab<br>
+            Selenium : driver.close()
+        </td>
     </tr>
     <tr>
         <td>quit()</td>
@@ -309,17 +339,18 @@ We include in the documentation the main selenium function embeded in the WebDri
     <tr>
         <td>
             Wait ignoreAll(<br>
-            >Collection&lt;Class&lt;? extends Throwable&gt;&gt; exceptions)
+            &nbsp;&nbsp;&nbsp;&nbsp;Collection... exceptions)
         </td>
         <td>List exceptions to be ignored when performing the checks</td>
     </tr>
     <tr>
         <td>Wait catchTimeoutException()</td>
         <td>
-            By default the engine wait for a condition that must be realized.<br>
-            If not, there is a failure and the test stops with failed status.<br>
-            Some times we need to wait for a condition that may be realized (or not).<br>
-            This function configure the wait engine to wait for a condition to be realized and if not relalized to continue the test.<br>
+            <p>By default the engine wait for a condition that must be realized.
+                If not, there is a failure and the test stops with failed status.
+                Some times we need to wait for a condition that may be realized (or not). </p>
+            <p>This function configure the wait engine to wait for a condition to be realized and if not relalized to
+                continue the test.</p>
             <ul>
                 <li>
                     wait.elementToBePresent(By by) :<br>
@@ -330,17 +361,20 @@ We include in the documentation the main selenium function embeded in the WebDri
                     if the condition is not realized the test continue
                 </li>
             </ul>
-            The call of this function affects only the first following wait.
+            <b><i>The call of this function affects only the first following wait</i></b>
         </td>
     </tr>
     <tr>
-        <td>Boolean elementToBePresent(By by)</td>
+        <td>
+            Boolean elementToBePresent(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;By by)
+        </td>
         <td>Wait for the element to exist in the page</td>
     </tr>
     <tr>
         <td>
-            public &lt;T&gt; T until(<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;Function&lt;WebDriver, T&gt; expectedCondition)
+            &lt;T&gt; T until(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Function... expectedCondition)
         </td>
         <td>
             This functions wait for the expectedCondition to be relazided<br>
@@ -352,6 +386,29 @@ We include in the documentation the main selenium function embeded in the WebDri
                 </li>
                 <li>wait.until(input -> 0 < driver.findElements(by).size())</li>
             </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>static</b> &lt;T&gt; T until(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Function... expectedCondition,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;WebDriver driver)
+        </td>
+        <td>
+            Wait for the expectedCondition with default settings
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>static</b> &lt;T&gt; T until(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Function... expectedCondition,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;WebDriver driver,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Duration interval,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Duration timeout,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Collection... exceptions)
+        </td>
+        <td>
+            Wait for the expectedCondition with custom settings
         </td>
     </tr>
 </table>
@@ -369,6 +426,15 @@ We include in the documentation the main selenium function embeded in the WebDri
     <tr>
         <td>
             execute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String script,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Object... args)
+        </td>
+        <td>Execute a script using a JavaScriptExecutor</td>
+    </tr>
+    <tr>
+        <td>
+            <b>static</b> void execute(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;WebDriver driver,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;String script,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;Object... args)
         </td>
