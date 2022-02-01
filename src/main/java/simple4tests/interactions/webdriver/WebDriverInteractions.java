@@ -33,10 +33,10 @@ import org.openqa.selenium.support.ui.Select;
 
 public class WebDriverInteractions {
 
-    protected WebDriver driver;
     protected boolean clear;
     protected boolean alwaysClear;
 
+    public WebDriver driver;
     public Wait wait;
     public JavaScript javaScript;
     public Browser browser;
