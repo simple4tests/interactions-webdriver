@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-package simple4tests.interactions.webdriver;
+package io.github.simple4tests.interactions.webdriver;
 
 import com.google.common.collect.ImmutableList;
 import org.openqa.selenium.*;

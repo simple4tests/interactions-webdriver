@@ -1,14 +1,19 @@
 # simple4tests
-The goal of simple4tests is to provide methodology and simple tools to support developers and testers while building maintainable and reliable automated tests.
+
+The goal of simple4tests is to provide methodology and simple tools to support developers and testers while building
+maintainable and reliable automated tests.
 
 ## Package interactions-webdriver
 
-WebDriverInteractions (wdi) is a set of functions you can integrate in your selenium test automation framework to manage automaticaly several technical stuff like waits, scrolling and much more.
+WebDriverInteractions (wdi) is a set of functions you can integrate in your selenium test automation framework to manage
+automaticaly several technical stuff like waits, scrolling and much more.
 
 You have less to care about it, keeping the code clean and focused on the test purpose.
 
 ## Usage
+
 1. Add dependency on your pom.xml file
+
 ```
     <dependency>
         <groupId>io.github.simple4tests</groupId>
@@ -18,6 +23,7 @@ You have less to care about it, keeping the code clean and focused on the test p
 ```
 
 2. Instanciate a WebDriverInteractions object
+
 ```
     WebDriver driver;
     ...
@@ -25,8 +31,9 @@ You have less to care about it, keeping the code clean and focused on the test p
     ...
     WebDriverInteractions wdi = new WebDriverInteractions(driver);
 ```
- 
+
 3. Just use it
+
 ```
     wdi.browser.navigateTo(...);
     wdi.click(...);
@@ -37,14 +44,18 @@ You have less to care about it, keeping the code clean and focused on the test p
 ## More info
 
 ### Documentation
+
 For more details see [WebDriver Interactions documentation](https://simple4tests.github.io/interactions-webdriver/)
 
 ### Examples of implementation
+
 For junit examples, checkout [wdi-ex-junit](https://github.com/simple4tests/wdi-ex-junit) on gitHub
 
-For full examples based on cucumber and including the 'webdriver-overload' package, checkout [wdi-ex-cucumber](https://github.com/simple4tests/wdi-ex-cucumber) on GitHub
+For full examples based on cucumber and including the 'webdriver-overload' package,
+checkout [wdi-ex-cucumber](https://github.com/simple4tests/wdi-ex-cucumber) on GitHub
 
 ## License
+
 ```
 MIT License
 
