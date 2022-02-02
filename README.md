@@ -23,26 +23,26 @@ You have less to care about it, keeping the code clean and focused on the test p
     ...
     driver = new ChromeDriver();
     ...
-    WebDriverInteractions ui = new WebDriverInteractions(driver);
+    WebDriverInteractions wdi = new WebDriverInteractions(driver);
 ```
  
 3. Just use it
 ```
-    ui.browser.navigateTo(...);
-    ui.click(...);
-    ui.set(...);
+    wdi.browser.navigateTo(...);
+    wdi.click(...);
+    wdi.set(...);
     ...
 ```
 
 ## More info
 
 ### Documentation
-For more details see [WebDriverInteractions](https://simple4tests.github.io/interactions-webdriver/) page
+For more details see [WebDriver Interactions documentation](https://simple4tests.github.io/interactions-webdriver/)
 
 ### Examples of implementation
 For junit examples, checkout [wdi-ex-junit](https://github.com/simple4tests/wdi-ex-junit) on gitHub
 
-For cucumber examples, checkout [wdi-ex-cucumber](https://github.com/simple4tests/wdi-ex-cucumber) on GitHub
+For full examples based on cucumber and including the 'webdriver-overload' package, checkout [wdi-ex-cucumber](https://github.com/simple4tests/wdi-ex-cucumber) on GitHub
 
 ## License
 ```
