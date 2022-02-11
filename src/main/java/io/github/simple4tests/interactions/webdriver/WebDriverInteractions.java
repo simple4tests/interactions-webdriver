@@ -144,6 +144,13 @@ public class WebDriverInteractions {
         new Select(element).selectByVisibleText(text);
     }
 
+    public Select getSelect(By by) {
+        if (isNull(by)) {
+            return null;
+        }
+        return new Select(getInteractableElement(by));
+    }
+
     public void click(By by) {
         if (isNull(by)) {
             return;

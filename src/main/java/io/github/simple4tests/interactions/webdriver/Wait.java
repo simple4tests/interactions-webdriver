@@ -80,6 +80,10 @@ public class Wait {
         return until(input -> 0 < driver.findElements(by).size());
     }
 
+    public Boolean elementNotToBePresent(By by) {
+        return until(input -> !elementToBePresent(by));
+    }
+
     public <T> T until(Function<WebDriver, T> expectedCondition) {
         if (catchTimeoutException) {
             catchTimeoutException = false;
