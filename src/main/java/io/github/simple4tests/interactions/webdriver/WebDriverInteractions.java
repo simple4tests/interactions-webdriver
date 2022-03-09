@@ -86,10 +86,14 @@ public class WebDriverInteractions {
     }
 
     public WebElement getInteractableElement(By by) {
+        return getInteractableElement(by, true, true, true);
+    }
+
+    public WebElement getInteractableElement(By by, boolean waitUntilElementIsDisplayed, boolean waitUntilElementIsEnabled, boolean scrollIntoView) {
         WebElement element = getElement(by);
-        wait.until(input -> element.isDisplayed());
-        wait.until(input -> element.isEnabled());
-        browser.scrollIntoView(element);
+        if (waitUntilElementIsDisplayed) wait.until(input -> element.isDisplayed());
+        if (waitUntilElementIsEnabled) wait.until(input -> element.isEnabled());
+        if (scrollIntoView) browser.scrollIntoView(element);
         return element;
     }
 
@@ -172,10 +176,7 @@ public class WebDriverInteractions {
         if (isNull(by) || isNull(fileAbsolutePath) || fileAbsolutePath.isEmpty()) {
             return;
         }
-//        getInteractableElement(by).sendKeys(fileAbsolutePath);
-        WebElement element = getElement(by);
-        browser.scrollIntoView(element);
-        element.sendKeys(fileAbsolutePath);
+        getInteractableElement(by, false, true, true).sendKeys(fileAbsolutePath);
     }
 
     public String getText(By by) {
