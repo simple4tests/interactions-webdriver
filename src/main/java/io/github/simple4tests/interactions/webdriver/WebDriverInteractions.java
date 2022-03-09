@@ -172,7 +172,10 @@ public class WebDriverInteractions {
         if (isNull(by) || isNull(fileAbsolutePath) || fileAbsolutePath.isEmpty()) {
             return;
         }
-        getInteractableElement(by).sendKeys(fileAbsolutePath);
+//        getInteractableElement(by).sendKeys(fileAbsolutePath);
+        WebElement element = getElement(by);
+        browser.scrollIntoView(element);
+        element.sendKeys(fileAbsolutePath);
     }
 
     public String getText(By by) {
