@@ -58,22 +58,6 @@ public class Browser {
         this.inline = inline;
     }
 
-    public void get(String url) {
-        driver.get(url);
-    }
-
-    public void navigateTo(String url) {
-        driver.navigate().to(url);
-    }
-
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
-    }
-
-    public Alert getAlert() {
-        return wait.until(ExpectedConditions.alertIsPresent());
-    }
-
     public void scrollIntoView(WebElement webElement) {
         scrollIntoView(webElement, behavior, block, inline);
     }
@@ -98,7 +82,23 @@ public class Browser {
         driver.close();
     }
 
-    public void quit() {
-        driver.quit();
+    public Alert getAlert() {
+        return wait.until(ExpectedConditions.alertIsPresent());
     }
+
+//    public void get(String url) {
+//        driver.get(url);
+//    }
+//
+//    public void navigateTo(String url) {
+//        driver.navigate().to(url);
+//    }
+//
+//    public String getCurrentUrl() {
+//        return driver.getCurrentUrl();
+//    }
+//
+//    public void quit() {
+//        driver.quit();
+//    }
 }
