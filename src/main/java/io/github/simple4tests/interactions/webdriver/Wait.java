@@ -80,7 +80,7 @@ public class Wait {
         return until(input -> 0 < driver.findElements(by).size());
     }
 
-    public Boolean elementNotToBePresent(By by) {
+    public Boolean elementToBeAbsent(By by) {
         return until(input -> 0 == driver.findElements(by).size());
     }
 

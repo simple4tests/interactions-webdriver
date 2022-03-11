@@ -24,31 +24,38 @@ SOFTWARE.
 
 package io.github.simple4tests.interactions.webdriver;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 public class WebDriverInteractions {
 
+    public static final String DEFAULT_SCROLL_BEHAVIOR = "auto";
+    public static final String DEFAULT_SCROLL_BLOCK = "center";
+    public static final String DEFAULT_SCROLL_INLINE = "center";
+
+    protected String scrollBehavior;
+    protected String scrollBlock;
+    protected String scrollInline;
+
     protected boolean clear;
-    protected boolean alwaysClear;
+    protected boolean clearOnce;
 
     public WebDriver driver;
     public Wait wait;
     public JavaScript javaScript;
-    public Browser browser;
 
     public WebDriverInteractions(WebDriver driver) {
-        this.driver = driver;
-        this.clear = false;
-        this.alwaysClear = false;
+        this.scrollBehavior = DEFAULT_SCROLL_BEHAVIOR;
+        this.scrollBlock = DEFAULT_SCROLL_BLOCK;
+        this.scrollInline = DEFAULT_SCROLL_INLINE;
 
-        wait = new Wait(driver);
-        javaScript = new JavaScript(driver);
-        browser = new Browser(driver, wait, javaScript);
+        this.clear = false;
+        this.clearOnce = false;
+
+        this.driver = driver;
+        this.wait = new Wait(driver);
+        this.javaScript = new JavaScript(driver);
     }
 
     protected boolean isNull(CharSequence... value) {
@@ -71,15 +78,6 @@ public class WebDriverInteractions {
         return null == by;
     }
 
-    public WebDriverInteractions clear() {
-        clear = true;
-        return this;
-    }
-
-    public void setClearOption(boolean alwaysClear) {
-        this.alwaysClear = alwaysClear;
-    }
-
     public WebElement getElement(By by) {
         wait.elementToBePresent(by);
         return driver.findElement(by);
@@ -93,7 +91,7 @@ public class WebDriverInteractions {
         WebElement element = getElement(by);
         if (waitUntilElementIsDisplayed) wait.until(input -> element.isDisplayed());
         if (waitUntilElementIsEnabled) wait.until(input -> element.isEnabled());
-        if (scrollIntoView) browser.scrollIntoView(element);
+        if (scrollIntoView) scrollIntoView(element);
         return element;
     }
 
@@ -101,58 +99,12 @@ public class WebDriverInteractions {
         return 0 < countElements(by);
     }
 
+    public boolean isElementAbsent(By by) {
+        return 0 == countElements(by);
+    }
+
     public int countElements(By by) {
         return isNull(by) ? 0 : driver.findElements(by).size();
-    }
-
-    public void clear(By by) {
-        if (isNull(by)) {
-            return;
-        }
-        WebElement element = getInteractableElement(by);
-        element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
-        element.clear();
-    }
-
-    public void set(By by, CharSequence... value) {
-        if (clear || alwaysClear) {
-            clear = false;
-            clear(by);
-        }
-        if (isNull(by) || isNull(value)) {
-            return;
-        }
-        if (0 == value.length) {
-            clear(by);
-            return;
-        }
-        getInteractableElement(by).sendKeys(value);
-    }
-
-    public void select(By by, Boolean value) {
-        if (isNull(by) || isNull(value)) {
-            return;
-        }
-        WebElement element = getInteractableElement(by);
-        if (!value.equals(element.isSelected())) {
-            element.click();
-        }
-    }
-
-    public void selectByVisibleText(By by, String text) {
-        if (isNull(by) || isNull(text)) {
-            return;
-        }
-        WebElement element = getInteractableElement(by);
-        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
-        new Select(element).selectByVisibleText(text);
-    }
-
-    public Select getSelect(By by) {
-        if (isNull(by)) {
-            return null;
-        }
-        return new Select(getInteractableElement(by));
     }
 
     public void click(By by) {
@@ -172,6 +124,37 @@ public class WebDriverInteractions {
         );
     }
 
+    public void setClearOption(boolean alwaysClear) {
+        this.clear = alwaysClear;
+    }
+
+    public WebDriverInteractions clear() {
+        clearOnce = true;
+        return this;
+    }
+
+    public void clear(By by) {
+        if (isNull(by)) {
+            return;
+        }
+        WebElement element = getInteractableElement(by);
+        element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
+        element.clear();
+    }
+
+    public void set(By by, CharSequence... value) {
+        if (isNull(by) || isNull(value)) {
+            return;
+        }
+        if (clear || clearOnce || 0 == value.length) {
+            clearOnce = false;
+            clear(by);
+        }
+        if (0 < value.length) {
+            getInteractableElement(by).sendKeys(value);
+        }
+    }
+
     public void upload(By by, String fileAbsolutePath) {
         if (isNull(by) || isNull(fileAbsolutePath) || fileAbsolutePath.isEmpty()) {
             return;
@@ -179,21 +162,79 @@ public class WebDriverInteractions {
         getInteractableElement(by, false, true, true).sendKeys(fileAbsolutePath);
     }
 
-    public String getText(By by) {
+    public void select(By by, Boolean value) {
+        if (isNull(by) || isNull(value)) {
+            return;
+        }
+        WebElement element = getInteractableElement(by);
+        if (!value.equals(element.isSelected())) {
+            element.click();
+        }
+    }
+
+    public Select getSelectWithVisibleText(By by, String visibleText) {
+        Select select = getSelect(by);
+        if (null != select) wait.catchTimeoutException().until(input -> visibleTextExists(select, visibleText));
+        return select;
+    }
+
+    public Select getSelectWithValue(By by, String value) {
+        Select select = getSelect(by);
+        if (null != select) wait.catchTimeoutException().until(input -> valueExists(select, value));
+        return select;
+    }
+
+    /*
+      Index starts at 0
+     */
+    public Select getSelectWithIndex(By by, int index) {
+        Select select = getSelect(by);
+        if (null != select) wait.catchTimeoutException().until(input -> indexExists(select, index));
+        return select;
+    }
+
+    public Select getSelect(By by) {
         if (isNull(by)) {
-            return "";
+            return null;
         }
-        return getElement(by).getText();
+        return new Select(getInteractableElement(by));
     }
 
-    public String getAttribute(By by, String attribute) {
-        if (isNull(by) || isNull(attribute)) {
-            return "";
-        }
-        return getElement(by).getAttribute(attribute);
+    public boolean visibleTextExists(Select select, String visibleText) {
+        if (isNull(visibleText) || visibleText.isEmpty()) return true;
+        for (WebElement option : select.getOptions())
+            if (visibleText.trim().equals(option.getText().trim())) {
+                return true;
+            }
+        return false;
     }
 
-    public void switchToMainFrame() {
+    public boolean valueExists(Select select, String value) {
+        if (isNull(value) || value.isEmpty()) return true;
+        for (WebElement option : select.getOptions())
+            if (value.equals(option.getAttribute("value"))) {
+                return true;
+            }
+        return false;
+    }
+
+    /*
+      Index starts at 0
+     */
+    public boolean indexExists(Select select, int index) {
+        if (index < 0) return true;
+        for (WebElement option : select.getOptions())
+            if (String.valueOf(index).equals(option.getAttribute("index"))) {
+                return true;
+            }
+        return false;
+    }
+
+    public Alert getAlert() {
+        return wait.until(ExpectedConditions.alertIsPresent());
+    }
+
+    public void switchToDefaultContent() {
         driver.switchTo().defaultContent();
     }
 
@@ -211,5 +252,34 @@ public class WebDriverInteractions {
 
     public void switchToFrame(String nameOrId) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId));
+    }
+
+    /*
+      Index starts at 0
+     */
+    public void switchToTab(int index) {
+        wait.until(input -> index < driver.getWindowHandles().size());
+        driver.switchTo().window(driver.getWindowHandles().toArray()[index].toString());
+    }
+
+    public void closeTab() {
+        driver.close();
+    }
+
+    public void setScrollIntoViewOptions(String behavior, String block, String inline) {
+        this.scrollBehavior = behavior;
+        this.scrollBlock = block;
+        this.scrollInline = inline;
+    }
+
+    public void scrollIntoView(WebElement webElement) {
+        scrollIntoView(webElement, scrollBehavior, scrollBlock, scrollInline);
+    }
+
+    public void scrollIntoView(WebElement webElement, String behavior, String block, String inline) {
+        javaScript.execute(
+                String.format("arguments[0].scrollIntoView({behavior: '%s', block: '%s', inline: '%s'});", behavior, block, inline),
+                webElement
+        );
     }
 }
