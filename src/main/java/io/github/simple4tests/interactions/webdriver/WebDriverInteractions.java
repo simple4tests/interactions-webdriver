@@ -111,7 +111,13 @@ public class WebDriverInteractions {
         if (isNull(by)) {
             return;
         }
-        getInteractableElement(by).click();
+        try {
+            getInteractableElement(by).click();
+        } catch (ElementNotInteractableException e) {
+            javaScript.execute(
+                    "var evObj = new MouseEvent('click', {bubbles: true, cancelable: true, view: window});arguments[0].dispatchEvent(evObj);",
+                    driver.findElement(by));
+        }
     }
 
     public void doubleClick(By by) {
