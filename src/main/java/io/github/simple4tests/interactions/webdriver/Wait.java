@@ -38,7 +38,7 @@ public class Wait {
     private Duration interval;
     private Duration timeout;
     private Collection<Class<? extends Throwable>> ignoredExceptions;
-    private boolean catchTimeoutException;
+    private boolean ignoreTimeoutException;
 
     public static final Duration DEFAULT_INTERVAL = Duration.ofMillis(50);
     public static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(10);
@@ -53,7 +53,7 @@ public class Wait {
         this.interval = DEFAULT_INTERVAL;
         this.timeout = DEFAULT_TIMEOUT;
         this.ignoredExceptions = DEFAULT_IGNORED_EXCEPTIONS;
-        this.catchTimeoutException = false;
+        this.ignoreTimeoutException = false;
     }
 
     public Wait pollingEvery(Duration interval) {
@@ -71,8 +71,8 @@ public class Wait {
         return this;
     }
 
-    public Wait catchTimeoutException() {
-        catchTimeoutException = true;
+    public Wait ignoreTimeoutException() {
+        ignoreTimeoutException = true;
         return this;
     }
 
@@ -85,8 +85,8 @@ public class Wait {
     }
 
     public <T> T until(Function<WebDriver, T> expectedCondition) {
-        if (catchTimeoutException) {
-            catchTimeoutException = false;
+        if (ignoreTimeoutException) {
+            ignoreTimeoutException = false;
             try {
                 return until(expectedCondition, interval, timeout, ignoredExceptions);
             } catch (TimeoutException e) {
@@ -100,6 +100,12 @@ public class Wait {
             final Function<WebDriver, T> expectedCondition,
             final Duration interval,
             final Duration timeout) {
+        return until(expectedCondition, driver, interval, timeout, ignoredExceptions);
+    }
+
+    public <T> T until(
+            final Function<WebDriver, T> expectedCondition,
+            final Collection<Class<? extends Throwable>> ignoredExceptions) {
         return until(expectedCondition, driver, interval, timeout, ignoredExceptions);
     }
 

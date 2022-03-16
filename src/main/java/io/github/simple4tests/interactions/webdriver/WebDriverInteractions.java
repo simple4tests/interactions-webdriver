@@ -84,7 +84,7 @@ public class WebDriverInteractions {
     }
 
     public WebElement getInteractableElement(By by) {
-        return getInteractableElement(by, true, true, true);
+        return getInteractableElement(by, false, true, true);
     }
 
     public WebElement getInteractableElement(By by, boolean waitUntilElementIsDisplayed, boolean waitUntilElementIsEnabled, boolean scrollIntoView) {
@@ -159,7 +159,7 @@ public class WebDriverInteractions {
         if (isNull(by) || isNull(fileAbsolutePath) || fileAbsolutePath.isEmpty()) {
             return;
         }
-        getInteractableElement(by, false, true, true).sendKeys(fileAbsolutePath);
+        getInteractableElement(by).sendKeys(fileAbsolutePath);
     }
 
     public void select(By by, Boolean value) {
@@ -174,13 +174,13 @@ public class WebDriverInteractions {
 
     public Select getSelectWithVisibleText(By by, String visibleText) {
         Select select = getSelect(by);
-        if (null != select) wait.catchTimeoutException().until(input -> visibleTextExists(select, visibleText));
+        if (null != select) wait.ignoreTimeoutException().until(input -> visibleTextExists(select, visibleText));
         return select;
     }
 
     public Select getSelectWithValue(By by, String value) {
         Select select = getSelect(by);
-        if (null != select) wait.catchTimeoutException().until(input -> valueExists(select, value));
+        if (null != select) wait.ignoreTimeoutException().until(input -> valueExists(select, value));
         return select;
     }
 
@@ -189,7 +189,7 @@ public class WebDriverInteractions {
      */
     public Select getSelectWithIndex(By by, int index) {
         Select select = getSelect(by);
-        if (null != select) wait.catchTimeoutException().until(input -> indexExists(select, index));
+        if (null != select) wait.ignoreTimeoutException().until(input -> indexExists(select, index));
         return select;
     }
 
