@@ -130,7 +130,7 @@ public class WebDriverInteractions {
         );
     }
 
-    public void setClearOption(boolean alwaysClear) {
+    public void alwaysClear(boolean alwaysClear) {
         this.clear = alwaysClear;
     }
 
