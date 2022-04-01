@@ -76,14 +76,6 @@ public class Wait {
         return this;
     }
 
-    public Boolean elementToBePresent(By by) {
-        return until(input -> 0 < driver.findElements(by).size());
-    }
-
-    public Boolean elementToBeAbsent(By by) {
-        return until(input -> 0 == driver.findElements(by).size());
-    }
-
     public <T> T until(Function<WebDriver, T> expectedCondition) {
         if (ignoreTimeoutException) {
             ignoreTimeoutException = false;

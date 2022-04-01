@@ -42,8 +42,8 @@ public class WebDriverInteractions {
     protected boolean clearOnce;
 
     public WebDriver driver;
+    public JavascriptExecutor js;
     public Wait wait;
-    public JavaScript javaScript;
 
     public WebDriverInteractions(WebDriver driver) {
         this.scrollBehavior = DEFAULT_SCROLL_BEHAVIOR;
@@ -54,8 +54,8 @@ public class WebDriverInteractions {
         this.clearOnce = false;
 
         this.driver = driver;
+        this.js = (JavascriptExecutor) driver;
         this.wait = new Wait(driver);
-        this.javaScript = new JavaScript(driver);
     }
 
     protected boolean isNull(CharSequence... value) {
@@ -79,7 +79,7 @@ public class WebDriverInteractions {
     }
 
     public WebElement getElement(By by) {
-        wait.elementToBePresent(by);
+        waitElementToBePresent(by);
         return driver.findElement(by);
     }
 
@@ -95,6 +95,10 @@ public class WebDriverInteractions {
         return element;
     }
 
+    public int countElements(By by) {
+        return isNull(by) ? 0 : driver.findElements(by).size();
+    }
+
     public boolean isElementPresent(By by) {
         return 0 < countElements(by);
     }
@@ -103,8 +107,12 @@ public class WebDriverInteractions {
         return 0 == countElements(by);
     }
 
-    public int countElements(By by) {
-        return isNull(by) ? 0 : driver.findElements(by).size();
+    public Boolean waitElementToBePresent(By by) {
+        return wait.until(input -> isElementPresent(by));
+    }
+
+    public Boolean waitElementToBeAbsent(By by) {
+        return wait.until(input -> isElementAbsent(by));
     }
 
     public void click(By by) {
@@ -114,7 +122,7 @@ public class WebDriverInteractions {
         try {
             getInteractableElement(by).click();
         } catch (ElementNotInteractableException e) {
-            javaScript.execute(
+            js.executeScript(
                     "var evObj = new MouseEvent('click', {bubbles: true, cancelable: true, view: window});arguments[0].dispatchEvent(evObj);",
                     driver.findElement(by));
         }
@@ -124,7 +132,7 @@ public class WebDriverInteractions {
         if (isNull(by)) {
             return;
         }
-        javaScript.execute(
+        js.executeScript(
                 "var evObj = new MouseEvent('dblclick', {bubbles: true, cancelable: true, view: window});arguments[0].dispatchEvent(evObj);",
                 getInteractableElement(by)
         );
@@ -283,7 +291,7 @@ public class WebDriverInteractions {
     }
 
     public void scrollIntoView(WebElement webElement, String behavior, String block, String inline) {
-        javaScript.execute(
+        js.executeScript(
                 String.format("arguments[0].scrollIntoView({behavior: '%s', block: '%s', inline: '%s'});", behavior, block, inline),
                 webElement
         );
