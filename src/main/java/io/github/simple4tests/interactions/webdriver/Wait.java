@@ -34,25 +34,27 @@ import java.util.function.Function;
 
 public class Wait {
 
-    private final WebDriver driver;
-    private Duration interval;
-    private Duration timeout;
-    private Collection<Class<? extends Throwable>> ignoredExceptions;
-    private boolean ignoreTimeoutException;
-
-    public static final Duration DEFAULT_INTERVAL = Duration.ofMillis(50);
-    public static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(10);
-    public static final Collection<Class<? extends Throwable>> DEFAULT_IGNORED_EXCEPTIONS = ImmutableList.of(
+    private static final Duration DEFAULT_INTERVAL = Duration.ofMillis(250);
+    private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(30);
+    private static final Collection<Class<? extends Throwable>> DEFAULT_IGNORED_EXCEPTIONS = ImmutableList.of(
             NoSuchElementException.class,
             StaleElementReferenceException.class,
             NoSuchFrameException.class,
             NoAlertPresentException.class);
 
+    private Duration interval;
+    private Duration timeout;
+    private Collection<Class<? extends Throwable>> ignoredExceptions;
+
+    private final WebDriver driver;
+    private boolean ignoreTimeoutException;
+
     public Wait(WebDriver driver) {
-        this.driver = driver;
         this.interval = DEFAULT_INTERVAL;
         this.timeout = DEFAULT_TIMEOUT;
         this.ignoredExceptions = DEFAULT_IGNORED_EXCEPTIONS;
+
+        this.driver = driver;
         this.ignoreTimeoutException = false;
     }
 
@@ -77,14 +79,6 @@ public class Wait {
     }
 
     public <T> T until(Function<WebDriver, T> expectedCondition) {
-        if (ignoreTimeoutException) {
-            ignoreTimeoutException = false;
-            try {
-                return until(expectedCondition, interval, timeout, ignoredExceptions);
-            } catch (TimeoutException e) {
-                return expectedCondition.apply(driver);
-            }
-        }
         return until(expectedCondition, interval, timeout, ignoredExceptions);
     }
 
@@ -92,13 +86,13 @@ public class Wait {
             final Function<WebDriver, T> expectedCondition,
             final Duration interval,
             final Duration timeout) {
-        return until(expectedCondition, driver, interval, timeout, ignoredExceptions);
+        return until(expectedCondition, interval, timeout, ignoredExceptions);
     }
 
     public <T> T until(
             final Function<WebDriver, T> expectedCondition,
             final Collection<Class<? extends Throwable>> ignoredExceptions) {
-        return until(expectedCondition, driver, interval, timeout, ignoredExceptions);
+        return until(expectedCondition, interval, timeout, ignoredExceptions);
     }
 
     public <T> T until(
@@ -106,6 +100,14 @@ public class Wait {
             final Duration interval,
             final Duration timeout,
             final Collection<Class<? extends Throwable>> ignoredExceptions) {
+        if (ignoreTimeoutException) {
+            ignoreTimeoutException = false;
+            try {
+                return until(expectedCondition, driver, interval, timeout, ignoredExceptions);
+            } catch (TimeoutException e) {
+                return expectedCondition.apply(driver);
+            }
+        }
         return until(expectedCondition, driver, interval, timeout, ignoredExceptions);
     }
 
