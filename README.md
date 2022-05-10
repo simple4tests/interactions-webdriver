@@ -49,10 +49,10 @@ For more details see [WebDriver Interactions documentation](https://simple4tests
 
 ### Examples of implementation
 
-For junit examples, checkout [wdi-ex-junit](https://github.com/simple4tests/wdi-ex-junit) on gitHub
+For junit examples, checkout [interactions-webdriver-demo](https://github.com/simple4tests/interactions-webdriver-demo) on gitHub
 
 For full examples based on cucumber and including the 'webdriver-overload' package,
-checkout [wdi-ex-cucumber](https://github.com/simple4tests/wdi-ex-cucumber) on GitHub
+checkout [webdriver-overload-demo](https://github.com/simple4tests/webdriver-overload-demo) on GitHub
 
 ## License
 
