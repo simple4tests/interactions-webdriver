@@ -37,7 +37,7 @@ You have less to care about it, keeping the code clean and focused on the test p
 ```
     wdi.browser.navigateTo(...);
     wdi.click(...);
-    wdi.set(...);
+    wdi.sendKeys(...);
     ...
 ```
 
