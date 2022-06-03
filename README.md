@@ -35,9 +35,9 @@ You have less to care about it, keeping the code clean and focused on the test p
 3. Just use it
 
 ```
-    wdi.browser.navigateTo(...);
-    wdi.click(...);
-    wdi.sendKeys(...);
+    wdi.driver.navigate().to(url);
+    wdi.click(by);
+    wdi.sendKeys(by, value);
     ...
 ```
 
