@@ -42,19 +42,17 @@ public class Wait {
             NoSuchFrameException.class,
             NoAlertPresentException.class);
 
+    private final WebDriver driver;
     private Duration interval;
     private Duration timeout;
     private Collection<Class<? extends Throwable>> ignoredExceptions;
-
-    private final WebDriver driver;
     private boolean ignoreTimeoutException;
 
     public Wait(WebDriver driver) {
+        this.driver = driver;
         this.interval = DEFAULT_INTERVAL;
         this.timeout = DEFAULT_TIMEOUT;
         this.ignoredExceptions = DEFAULT_IGNORED_EXCEPTIONS;
-
-        this.driver = driver;
         this.ignoreTimeoutException = false;
     }
 
